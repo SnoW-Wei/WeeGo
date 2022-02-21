@@ -31,6 +31,8 @@ func main() {
 
 	// new 一个 Gin Engine实例
 	r := gin.New()
+	// 初始化DB
+	bootstrap.SetupDB()
 
 	// 注册一个路由
 	bootstrap.SetupRouter(r)

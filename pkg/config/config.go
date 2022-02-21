@@ -58,10 +58,12 @@ func loadEnv(envSuffix string) {
 	// 默认加载 .env 文件，如果传参数 --env=name的话，加载 .env.name文件
 	envPath := ".env"
 	if len(envSuffix) > 0 {
-		filepath := ".env" + envSuffix
+		filepath := ".env." + envSuffix
 		if _, err := os.Stat(filepath); err == nil {
 			// 如 .env.testing 或 .env.stage
 			envPath = filepath
+		} else {
+			panic(err)
 		}
 	}
 
