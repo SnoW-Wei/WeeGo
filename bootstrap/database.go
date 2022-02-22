@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"weego/app/models/user"
 	"weego/pkg/config"
 	"weego/pkg/database"
 
@@ -20,7 +21,7 @@ func SetupDB() {
 	switch config.Get("database.connection") {
 	case "mysql":
 		// 构建dsn信息
-		dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?chatset=%v&parseTime=True&multiStatements=true&loc=Local",
+		dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=%v&parseTime=True&multiStatements=true&loc=Local",
 			config.Get("database.mysql.username"),
 			config.Get("database.mysql.password"),
 			config.Get("database.mysql.host"),
@@ -49,4 +50,6 @@ func SetupDB() {
 	database.SQLDB.SetMaxIdleConns(config.GetInt("database.mysql.max_idle_connections"))
 	// 设置每个链接的过期时间
 	database.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
+
+	database.DB.AutoMigrate(&user.User{})
 }
