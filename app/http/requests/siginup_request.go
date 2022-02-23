@@ -17,23 +17,14 @@ func ValidateSignupPhoneExist(data interface{}, c *gin.Context) map[string][]str
 	}
 
 	// 自定义验证出错时的提示
-	message := govalidator.MapData{
+	messages := govalidator.MapData{
 		"phone": []string{
 			"required:手机号必须填写，参数名称phone",
 			"digits:手机号长度必须为11位的数字",
 		},
 	}
 
-	// 配置初始化
-	opts := govalidator.Options{
-		Data:          data,
-		Rules:         rules,
-		TagIdentifier: "valid", // 模型中的Struct 标签标识符
-		Messages:      message,
-	}
-
-	// 开始验证
-	return govalidator.New(opts).ValidateStruct()
+	return validate(data, rules, messages)
 }
 
 type SignupEmailExistRequest struct {
@@ -54,14 +45,6 @@ func ValidateSignipEmailExist(data interface{}, c *gin.Context) map[string][]str
 		},
 	}
 
-	// 配置初始化
-	opts := govalidator.Options{
-		Data:          data,
-		Rules:         rules,
-		TagIdentifier: "valid",
-		Messages:      messages,
-	}
-
-	return govalidator.New(opts).ValidateStruct()
+	return validate(data, rules, messages)
 
 }
