@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: talk is cheep , show me the code !
+ * @version: V1.0
+ * @Author: snow.wei
+ * @Date: 2022-02-21 12:56:09
+ * @LastEditors: snow.wei
+ * @LastEditTime: 2022-02-24 20:14:25
+ */
 package main
 
 import (
@@ -29,6 +37,7 @@ func main() {
 	flag.Parse()
 	config.InitConfig(env)
 
+	bootstrap.SetupLogger()
 	// new 一个 Gin Engine实例
 	r := gin.New()
 	// 初始化DB
