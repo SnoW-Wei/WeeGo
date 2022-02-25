@@ -1,9 +1,19 @@
+/*
+ * @Descripttion: talk is cheep , show me the code !
+ * @version: V1.0
+ * @Author: snow.wei
+ * @Date: 2022-02-21 15:32:25
+ * @LastEditors: snow.wei
+ * @LastEditTime: 2022-02-25 13:56:20
+ */
 package bootstrap
 
 import (
 	"net/http"
 	"strings"
 	"weego/routes"
+
+	"weego/app/http/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +31,7 @@ func SetupRouter(router *gin.Engine) {
 
 func registerGlobalMiddleWare(router *gin.Engine) {
 	router.Use(
-		gin.Logger(),
+		middlewares.Logger(),
 		gin.Recovery(),
 	)
 }

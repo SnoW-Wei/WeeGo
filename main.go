@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-24 20:14:25
+ * @LastEditTime: 2022-02-25 14:16:43
  */
 package main
 
@@ -37,7 +37,15 @@ func main() {
 	flag.Parse()
 	config.InitConfig(env)
 
+	// 初始化 Logger
 	bootstrap.SetupLogger()
+
+	// 设置 gin的运行模式，支持debug , release ,test
+	// release 会屏蔽调试信息，官方建议生产环境中使用
+	// 非release 模式gin 终端打印太多信息，干扰到我们程序中的Log
+	// 故此设置为 Release，有特殊情况手动改为 debug 即可
+	gin.SetMode(gin.ReleaseMode)
+
 	// new 一个 Gin Engine实例
 	r := gin.New()
 	// 初始化DB
