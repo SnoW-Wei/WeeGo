@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:32:25
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-25 13:56:20
+ * @LastEditTime: 2022-02-25 14:44:31
  */
 package bootstrap
 
@@ -32,7 +32,7 @@ func SetupRouter(router *gin.Engine) {
 func registerGlobalMiddleWare(router *gin.Engine) {
 	router.Use(
 		middlewares.Logger(),
-		gin.Recovery(),
+		middlewares.Recovery(),
 	)
 }
 

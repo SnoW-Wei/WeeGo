@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: talk is cheep , show me the code !
+ * @version: V1.0
+ * @Author: snow.wei
+ * @Date: 2022-02-22 18:18:22
+ * @LastEditors: snow.wei
+ * @LastEditTime: 2022-02-25 14:45:11
+ */
 package auth
 
 import (
@@ -17,7 +25,6 @@ type SignupController struct {
 
 // IsPhoneExist 检测手机号是否被注册
 func (sc *SignupController) IsPhoneExist(c *gin.Context) {
-
 	// 初始化请求对象
 	request := requests.SignupPhoneExistRequest{}
 
