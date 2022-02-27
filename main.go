@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-27 13:04:06
+ * @LastEditTime: 2022-02-27 13:22:55
  */
 package main
 
@@ -61,6 +61,6 @@ func main() {
 	err := r.Run(":" + config.Get("app.port"))
 
 	if err != nil {
-		fmt.Println("err.Error()")
+		fmt.Println(err.Error())
 	}
 }

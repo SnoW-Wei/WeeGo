@@ -198,7 +198,7 @@ https://api.gohub.com/
 ```
 'message' => ':message',         // 错误描述，一般情况下，客户端可用于直接展示给用户
 'errors' => ':errors',            // 参数的具体错误描述
-'error_code' => ':error_code',    // 自定义的错误码，方便开发人员定位问题
+'code' => ':error_code',    // 自定义的错误码，方便开发人员定位问题
 ```
 例如
 ```
@@ -209,7 +209,7 @@ https://api.gohub.com/
             "姓名 必须为字符串。"
         ]
     },
-    "error_code": 10201
+    "code": 10201
 }
 ```
 

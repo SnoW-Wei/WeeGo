@@ -4,14 +4,14 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 18:18:22
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-25 14:45:11
+ * @LastEditTime: 2022-02-27 14:14:19
  */
 package auth
 
 import (
-	"net/http"
 	v1 "weego/app/http/controllers/api/v1"
 	"weego/app/models/user"
+	"weego/pkg/response"
 
 	"weego/app/http/requests"
 
@@ -33,7 +33,7 @@ func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 	}
 
 	// 检验数据库并返回响应
-	c.JSON(http.StatusOK, gin.H{
+	response.JSON(c, gin.H{
 		"exit": user.IsPhoneExist(request.Phone),
 	})
 
@@ -47,7 +47,7 @@ func (sc *SignupController) IsEmailExist(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	response.JSON(c, gin.H{
 		"exist": user.IsEmailExist(request.Email),
 	})
 }

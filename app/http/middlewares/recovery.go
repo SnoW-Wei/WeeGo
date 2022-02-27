@@ -4,18 +4,18 @@
  * @Author: snow.wei
  * @Date: 2022-02-25 14:27:29
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-25 14:47:35
+ * @LastEditTime: 2022-02-27 14:20:25
  */
 package middlewares
 
 import (
 	"net"
-	"net/http"
 	"net/http/httputil"
 	"os"
 	"strings"
 	"time"
 	"weego/pkg/logger"
+	"weego/pkg/response"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -64,9 +64,7 @@ func Recovery() gin.HandlerFunc {
 					zap.Stack("stacktrace"),                    //调用堆栈信息
 				)
 				// 返回 500状态码
-				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-					"message": "服务器内部错误，请稍后再试",
-				})
+				response.Abort500(c)
 			}
 		}()
 		c.Next()

@@ -4,15 +4,15 @@
  * @Author: snow.wei
  * @Date: 2022-02-27 12:36:37
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-27 12:42:58
+ * @LastEditTime: 2022-02-27 14:15:46
  */
 package auth
 
 import (
-	"net/http"
 	v1 "weego/app/http/controllers/api/v1"
 	"weego/pkg/captcha"
 	"weego/pkg/logger"
+	"weego/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,7 +31,7 @@ func (vc *VerifyCodeController) ShowCaptcha(c *gin.Context) {
 	logger.LogIf(err)
 
 	// 返回给用户
-	c.JSON(http.StatusOK, gin.H{
+	response.JSON(c, gin.H{
 		"captcha_id":    id,
 		"captcha_image": b64s,
 	})
