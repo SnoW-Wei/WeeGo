@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-25 14:16:43
+ * @LastEditTime: 2022-02-26 11:05:41
  */
 package main
 
@@ -50,6 +50,9 @@ func main() {
 	r := gin.New()
 	// 初始化DB
 	bootstrap.SetupDB()
+
+	// 初始化Redis
+	bootstrap.SetupRedis()
 
 	// 注册一个路由
 	bootstrap.SetupRouter(r)
