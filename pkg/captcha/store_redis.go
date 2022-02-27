@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-27 11:23:25
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-27 11:31:40
+ * @LastEditTime: 2022-02-27 12:58:54
  */
 package captcha
 
@@ -28,11 +28,10 @@ func (s *RedisStore) Set(key string, value string) error {
 	ExpireTime := time.Minute * time.Duration(config.GetInt64("captcha.expire_time"))
 
 	if app.IsLocal() {
-		ExpireTime = time.Minute * time.Duration(config.GetInt64("captcha.debug.expire_time"))
+		ExpireTime = time.Minute * time.Duration(config.GetInt64("captcha.debug_expire_time"))
 	}
 
 	if ok := s.RedisClient.Set(s.KeyPrefix+key, value, ExpireTime); !ok {
-
 		return errors.New("无法存储图片验证码答案")
 	}
 	return nil
