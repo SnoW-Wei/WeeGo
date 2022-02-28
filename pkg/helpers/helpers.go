@@ -4,12 +4,14 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 16:58:57
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-25 13:55:06
+ * @LastEditTime: 2022-02-28 19:22:16
  */
 package helpers
 
 import (
+	"crypto/rand"
 	"fmt"
+	"io"
 	"reflect"
 	"time"
 )
@@ -45,4 +47,20 @@ func Empty(val interface{}) bool {
 // 输出为小数点后 3 位的ms (microsecond 毫秒，千分之一秒)
 func MicrosecondsStr(elapsed time.Duration) string {
 	return fmt.Sprintf("%.3fms", float64(elapsed.Nanoseconds())/1e6)
+}
+
+func RandomNumber(length int) string {
+	table := [...]byte{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
+
+	b := make([]byte, length)
+	n, err := io.ReadAtLeast(rand.Reader, b, length)
+
+	if n != length {
+		panic(err)
+	}
+
+	for i := 0; i < len(b); i++ {
+		b[i] = table[int(b[i])%len(table)]
+	}
+	return string(b)
 }
