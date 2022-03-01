@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-28 19:23:29
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-28 19:26:32
+ * @LastEditTime: 2022-02-28 20:43:50
  */
 package config
 
@@ -28,7 +28,7 @@ func init() {
 			"debug_code": 123456,
 
 			// 方便本地和 API 自动测试
-			"debug_phone_prefix": "000",
+			"debug_phone_prefix": "150",
 			"debug_email_suffix": "@testing.com",
 		}
 	})
