@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-01 13:16:45
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-01 18:36:00
+ * @LastEditTime: 2022-03-01 19:31:17
  */
 package mail
 
@@ -22,7 +22,7 @@ func (s *SMTP) Send(email Email, config map[string]string) bool {
 
 	e := emailPKG.NewEmail()
 
-	e.From = fmt.Sprintf("%v <%v%>", email.From.Name, email.From.Address)
+	e.From = fmt.Sprintf("%v <%v>", email.From.Name, email.From.Address)
 	e.To = email.To
 	e.Cc = email.Cc
 	e.Subject = email.Subject
