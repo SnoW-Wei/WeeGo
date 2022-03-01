@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-28 20:05:12
+ * @LastEditTime: 2022-03-01 20:01:12
  */
 package routes
 
@@ -28,6 +28,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			// 图片验证码，需要加限流
 			authGroup.POST("/verify-code/captcha", vcc.ShowCaptcha)
 			authGroup.POST("/verify-code/phone", vcc.SendUsingPhone)
+			authGroup.POST("/verify-code/email", vcc.SendUsingEmail)
 		}
 	}
 }

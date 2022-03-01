@@ -4,17 +4,19 @@
  * @Author: snow.wei
  * @Date: 2022-02-28 18:59:04
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-28 20:45:08
+ * @LastEditTime: 2022-03-01 19:37:26
  */
 package verifycode
 
 import (
+	"fmt"
 	"strings"
 	"sync"
 	"weego/pkg/app"
 	"weego/pkg/config"
 	"weego/pkg/helpers"
 	"weego/pkg/logger"
+	"weego/pkg/mail"
 	"weego/pkg/redis"
 	"weego/pkg/sms"
 )
@@ -59,6 +61,33 @@ func (vc *VerifyCode) SendSMS(phone string) bool {
 		Template: config.GetString("sms.aliyun.template_code"),
 		Data:     map[string]string{"code": code},
 	})
+}
+
+// SendEmail 发送邮件验证码，调用示例
+//  verifycode.NewVerifyCode().SendEmail(request.Email)
+func (vc *VerifyCode) SendEmail(email string) error {
+
+	// 生成验证码
+	code := vc.generateVerifyCode(email)
+
+	// 方便本地和 API 自动测试
+	if !app.IsProduction() && strings.HasSuffix(email, config.GetString("verifycode.debug_email_suffix")) {
+		return nil
+	}
+
+	content := fmt.Sprintf("<h1> 您的 Email 验证码 %v </h1>", code)
+
+	// 发送邮件
+	mail.NewMailer().Send(mail.Email{
+		From: mail.From{
+			Address: config.GetString("mail.from.address"),
+			Name:    config.GetString("mail.name"),
+		},
+		To:      []string{email},
+		Subject: "Email 验证码",
+		HTML:    []byte(content),
+	})
+	return nil
 }
 
 // CheckAnswer 检查用户提交的验证码是否正确， key 可以是手机号或者email
