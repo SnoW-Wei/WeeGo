@@ -18,6 +18,6 @@ type BaseModel struct {
 
 //TODO 自动补充时间
 type CommonTimeStampsField struct {
-	CreateAt time.Time `gorm:"column:created_at;index;" json:"created_at,omitempty"`
-	UpdateAt time.Time `gorm:"column:updated_at;index;" json:"updated_at,omitempty"`
+	CreatedAt time.Time `gorm:"column:created_at;index;" json:"created_at,omitempty"`
+	UpdatedAt time.Time `gorm:"column:updated_at;index;" json:"updated_at,omitempty"`
 }
