@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-04 22:39:15
+ * @LastEditTime: 2022-03-05 14:30:12
  */
 package routes
 
@@ -30,6 +30,9 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/verify-code/captcha", vcc.ShowCaptcha)
 			authGroup.POST("/verify-code/phone", vcc.SendUsingPhone)
 			authGroup.POST("/verify-code/email", vcc.SendUsingEmail)
+			lgc := new(auth.LoginController)
+			// 使用手机号，短信验证码登录
+			authGroup.POST("/login/using-phone", lgc.LoginByPhone)
 		}
 	}
 }

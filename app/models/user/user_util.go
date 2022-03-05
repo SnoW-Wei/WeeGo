@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: talk is cheep , show me the code !
+ * @version: V1.0
+ * @Author: snow.wei
+ * @Date: 2022-02-22 17:37:49
+ * @LastEditors: snow.wei
+ * @LastEditTime: 2022-03-05 14:14:18
+ */
 package user
 
 import (
@@ -18,4 +26,20 @@ func IsPhoneExist(phone string) bool {
 	var count int64
 	database.DB.Model(User{}).Where("phone = ?", phone).Count(&count)
 	return count > 0
+}
+
+// GetByPhone 通过手机号来获取用户
+func GetByPhone(phone string) (userModel User) {
+	database.DB.Where("phone = ?", phone).First(&userModel)
+	return
+}
+
+// GetByMilti 通过 手机号/Email/用户名 来获取用户
+func GetByMulti(loginID string) (userModel User) {
+	database.DB.
+		Where("phone = ? ", loginID).
+		Or("email = ?", loginID).
+		Or("name = ?", loginID).
+		First(&userModel)
+	return
 }
