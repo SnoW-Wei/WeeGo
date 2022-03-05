@@ -4,13 +4,14 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 18:18:22
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-04 22:38:06
+ * @LastEditTime: 2022-03-05 12:05:16
  */
 package auth
 
 import (
 	v1 "weego/app/http/controllers/api/v1"
 	"weego/app/models/user"
+	"weego/pkg/jwt"
 	"weego/pkg/response"
 
 	"weego/app/http/requests"
@@ -63,17 +64,19 @@ func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 	}
 
 	// 2. 验证成功，创建数据
-	_user := user.User{
+	userModel := user.User{
 		Name:     request.Name,
 		Phone:    request.Phone,
 		Password: request.Password,
 	}
 
-	_user.Create()
+	userModel.Create()
 
-	if _user.ID > 0 {
+	if userModel.ID > 0 {
+		token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
-			"data": _user,
+			"token": token,
+			"data":  userModel,
 		})
 	} else {
 		response.Abort500(c, "创建用户失败，请稍后尝试～")
@@ -98,9 +101,11 @@ func (sc *SignupController) SignupUsingEmail(c *gin.Context) {
 
 	userModel.Create()
 
-	if userModel.ID >0 {
+	if userModel.ID > 0 {
+		token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
-			"data" : userModel,
+			"token": token,
+			"data":  userModel,
 		})
 	} else {
 		response.Abort500(c, "创建用户失败，请稍后再试～")
