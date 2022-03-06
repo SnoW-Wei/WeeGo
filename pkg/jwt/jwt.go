@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 10:09:36
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-05 11:56:43
+ * @LastEditTime: 2022-03-06 23:11:17
  */
 package jwt
 
@@ -63,7 +63,8 @@ func NewJWT() *JWT {
 	}
 }
 
-func (jwt *JWT) parserToken(c *gin.Context) (*JWTCustomClaims, error) {
+// ParserToken 解析 token，中间键中调用
+func (jwt *JWT) ParserToken(c *gin.Context) (*JWTCustomClaims, error) {
 
 	tokenString, parseErr := jwt.getTokenFromHeader(c)
 	if parseErr != nil {

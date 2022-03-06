@@ -4,13 +4,16 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 14:04:18
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-05 14:10:14
+ * @LastEditTime: 2022-03-06 23:35:22
  */
 package auth
 
 import (
 	"errors"
 	"weego/app/models/user"
+	"weego/pkg/logger"
+
+	"github.com/gin-gonic/gin"
 )
 
 //Attempt 尝试登录
@@ -37,4 +40,20 @@ func LoginByPhone(phone string) (user.User, error) {
 	}
 
 	return userModel, nil
+}
+
+// CurrentUser 从 gin.context 中获取当前登录用户
+func CurrentUser(c *gin.Context) user.User {
+	userModel, ok := c.MustGet("current_user").(user.User)
+	if !ok {
+		logger.LogIf(errors.New("无法获取用户"))
+		return user.User{}
+	}
+	// db is now a *DB value
+	return userModel
+}
+
+// CurrentUID 从 gin.context 中获取当前登录用户id
+func CurrentUID(c *gin.Context) string {
+	return c.GetString("current_user_id")
 }
