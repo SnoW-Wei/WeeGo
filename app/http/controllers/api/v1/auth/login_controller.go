@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 14:22:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-06 21:17:09
+ * @LastEditTime: 2022-03-06 21:40:40
  */
 package auth
 
@@ -68,4 +68,15 @@ func (lc *LoginController) LoginByPassword(c *gin.Context) {
 		})
 	}
 
+}
+
+func (lc *LoginController) RefreshToken(c *gin.Context) {
+	token , err := jwt.NewJWT().RefreshToken(c)
+	if err != nil {
+		response.Error(c, err, "刷新token失败")
+	} else {
+		response.JSON(c, gin.H{
+			"token": token,
+		})
+	}
 }
