@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 14:22:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-05 14:28:05
+ * @LastEditTime: 2022-03-06 21:17:09
  */
 package auth
 
@@ -45,4 +45,27 @@ func (lc *LoginController) LoginByPhone(c *gin.Context) {
 			"token": token,
 		})
 	}
+}
+
+// LoginByPassword 多种方法登录，支持手机号、Email、用户名
+func (lc *LoginController) LoginByPassword(c *gin.Context) {
+
+	// 1. 验证表单
+	request := requests.LoginByPasswordRequest{}
+	if ok := requests.Validate(c, &request, requests.LoginByPassword); !ok {
+		return
+	}
+
+	// 2. 尝试登录
+	user, err := auth.Attempt(request.LoginID, request.Password)
+	if err != nil {
+		// 失败，显示错误提示
+		response.Unauthorized(c, "登录失败")
+	} else {
+		token := jwt.NewJWT().IssueToken(user.GetStringID(), user.Name)
+		response.JSON(c, gin.H{
+			"token": token,
+		})
+	}
+
 }
