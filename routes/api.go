@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-06 23:43:28
+ * @LastEditTime: 2022-03-12 02:20:52
  */
 package routes
 
@@ -36,6 +36,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			// 使用手机号，Email和用户名
 			authGroup.POST("/login/using-password", lgc.LoginByPassword)
 			authGroup.POST("/login/refresh-token", lgc.RefreshToken)
+
+			//重置密码
+			pwc := new(auth.PasswordController)
+			authGroup.POST("/password-reset/using-phone", pwc.ResetByphone)
 		}
 	}
 }

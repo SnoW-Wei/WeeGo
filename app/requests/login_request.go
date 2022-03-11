@@ -9,7 +9,7 @@
 package requests
 
 import (
-	"weego/app/http/requests/validators"
+	"weego/app/requests/validators"
 
 	"github.com/gin-gonic/gin"
 	"github.com/thedevsaddam/govalidator"

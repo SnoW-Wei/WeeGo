@@ -4,12 +4,12 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 13:51:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-05 12:06:25
+ * @LastEditTime: 2022-03-12 03:00:02
  */
 package models
 
 import (
-	"time"
+	"weego/pkg/localtime"
 
 	"github.com/spf13/cast"
 )
@@ -20,8 +20,9 @@ type BaseModel struct {
 
 //TODO 时间格式问题
 type CommonTimeStampsField struct {
-	CreatedAt time.Time `gorm:"column:created_at;index;" json:"created_at,omitempty"`
-	UpdatedAt time.Time `gorm:"column:updated_at;index;" json:"updated_at,omitempty"`
+	CreatedAt localtime.LocalTime `gorm:"comment:'创建时间';type:timestamp;" json:"created_at,omitempty"`
+	UpdatedAt localtime.LocalTime `gorm:"comment:'修改时间';type:timestamp;" json:"updated_at,omitempty"`
+	//DeletedAt *time.Time `gorm:"column:deleted_at;type:timestamp;" json:"deleted_at,omitempty"`
 }
 
 func (a BaseModel) GetStringID() string {

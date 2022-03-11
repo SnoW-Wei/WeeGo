@@ -4,13 +4,13 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 14:22:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-06 21:40:40
+ * @LastEditTime: 2022-03-12 02:14:45
  */
 package auth
 
 import (
 	v1 "weego/app/http/controllers/api/v1"
-	"weego/app/http/requests"
+	"weego/app/requests"
 	"weego/pkg/auth"
 	"weego/pkg/jwt"
 	"weego/pkg/response"
@@ -71,7 +71,7 @@ func (lc *LoginController) LoginByPassword(c *gin.Context) {
 }
 
 func (lc *LoginController) RefreshToken(c *gin.Context) {
-	token , err := jwt.NewJWT().RefreshToken(c)
+	token, err := jwt.NewJWT().RefreshToken(c)
 	if err != nil {
 		response.Error(c, err, "刷新token失败")
 	} else {

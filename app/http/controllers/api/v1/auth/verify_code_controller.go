@@ -4,13 +4,13 @@
  * @Author: snow.wei
  * @Date: 2022-02-27 12:36:37
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-01 19:59:54
+ * @LastEditTime: 2022-03-12 02:19:14
  */
 package auth
 
 import (
 	v1 "weego/app/http/controllers/api/v1"
-	"weego/app/http/requests"
+	"weego/app/requests"
 	"weego/pkg/captcha"
 	"weego/pkg/logger"
 	"weego/pkg/response"

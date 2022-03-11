@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 16:52:07
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-05 00:04:59
+ * @LastEditTime: 2022-03-12 02:09:45
  */
 package user
 
@@ -33,4 +33,9 @@ func (userModel *User) Create() {
 // ComparePassword 密码是否正确
 func (userModel *User) ComparePassword(_password string) bool {
 	return hash.BcryptCheck(_password, userModel.Password)
+}
+
+func (userModel *User) Save() (rowsAffected int64) {
+	result := database.DB.Save(&userModel)
+	return result.RowsAffected
 }

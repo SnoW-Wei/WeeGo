@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 18:18:22
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-05 12:05:16
+ * @LastEditTime: 2022-03-12 02:16:35
  */
 package auth
 
@@ -14,7 +14,7 @@ import (
 	"weego/pkg/jwt"
 	"weego/pkg/response"
 
-	"weego/app/http/requests"
+	"weego/app/requests"
 
 	"github.com/gin-gonic/gin"
 )

@@ -4,12 +4,12 @@
  * @Author: snow.wei
  * @Date: 2022-02-28 19:28:50
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-01 19:56:34
+ * @LastEditTime: 2022-03-12 02:18:03
  */
 package requests
 
 import (
-	"weego/app/http/requests/validators"
+	"weego/app/requests/validators"
 
 	"github.com/gin-gonic/gin"
 	"github.com/thedevsaddam/govalidator"
