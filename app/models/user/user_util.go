@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 17:37:49
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-06 23:20:02
+ * @LastEditTime: 2022-03-14 01:03:01
  */
 package user
 
@@ -47,5 +47,11 @@ func GetByMulti(loginID string) (userModel User) {
 // Get 通过 ID 获取用户
 func Get(idstr string) (userModel User) {
 	database.DB.Where("id", idstr).First(&userModel)
+	return
+}
+
+// GetByEmail 通过 Email 来获取用户
+func GetByEmail(email string) (userModel User) {
+	database.DB.Where("email = ?", email).First(&userModel)
 	return
 }

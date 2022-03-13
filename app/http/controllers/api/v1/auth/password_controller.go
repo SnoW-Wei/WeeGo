@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-12 02:00:59
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-12 02:15:04
+ * @LastEditTime: 2022-03-14 01:02:47
  */
 package auth
 
@@ -40,4 +40,23 @@ func (pc *PasswordController) ResetByphone(c *gin.Context) {
 		response.Success(c)
 	}
 
+}
+
+// ResetByEmail 使用 Email 和验证码重置密码
+func (pc *PasswordController) ResetByEmail(c *gin.Context) {
+	// 1. 验证表单
+	request := requests.ResetByEmailRequest{}
+	if ok := requests.Validate(c, &request, requests.ResetByEmail); !ok {
+		return
+	}
+
+	// 2. 更新密码
+	userModel := user.GetByEmail(request.Email)
+	if userModel.ID == 0 {
+		response.Abort404(c)
+	} else {
+		userModel.Password = request.Password
+		userModel.Save()
+		response.Success(c)
+	}
 }
