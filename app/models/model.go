@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 13:51:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-12 03:00:02
+ * @LastEditTime: 2022-03-12 03:04:19
  */
 package models
 
@@ -18,7 +18,6 @@ type BaseModel struct {
 	ID uint64 `gorm:"column:id;primaryKey;autoIncrement;" json:"id,omitempty"`
 }
 
-//TODO 时间格式问题
 type CommonTimeStampsField struct {
 	CreatedAt localtime.LocalTime `gorm:"comment:'创建时间';type:timestamp;" json:"created_at,omitempty"`
 	UpdatedAt localtime.LocalTime `gorm:"comment:'修改时间';type:timestamp;" json:"updated_at,omitempty"`
