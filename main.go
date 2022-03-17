@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 20:24:36
+ * @LastEditTime: 2022-03-17 22:13:53
  */
 package main
 
@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"os"
 	"weego/app/cmd"
+	"weego/app/cmd/make"
 	"weego/bootstrap"
 	btsConfig "weego/config"
 	"weego/pkg/config"
@@ -63,6 +64,7 @@ func main() {
 		cmd.CmdServe,
 		cmd.CmdKey,
 		cmd.CmdPlay,
+		make.CmdMake,
 	)
 
 	// 配置默认运用 web 服务
