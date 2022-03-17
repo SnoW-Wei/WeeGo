@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:32:25
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-25 14:44:31
+ * @LastEditTime: 2022-03-17 18:12:38
  */
 package bootstrap
 
@@ -18,7 +18,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter(router *gin.Engine) {
+func SetupRoute(router *gin.Engine) {
 	// 注册全局中间键
 	registerGlobalMiddleWare(router)
 

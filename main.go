@@ -4,18 +4,20 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-06 23:30:02
+ * @LastEditTime: 2022-03-17 19:28:05
  */
 package main
 
 import (
-	"flag"
 	"fmt"
+	"os"
+	"weego/app/cmd"
 	"weego/bootstrap"
 	btsConfig "weego/config"
 	"weego/pkg/config"
+	"weego/pkg/console"
 
-	"github.com/gin-gonic/gin"
+	"github.com/spf13/cobra"
 )
 
 /**
@@ -32,35 +34,38 @@ func init() {
 
 func main() {
 
-	var env string
-	flag.StringVar(&env, "env", "", "加载 .env文件，如 --env=test 加载的是.env.test文件")
-	flag.Parse()
-	config.InitConfig(env)
+	var rootCmd = &cobra.Command{
+		Use:   config.Get("app.name"),
+		Short: "Start web server",
+		Long:  `Defalut will run "serve" command, you can use "-h" flag to see all commands`,
 
-	// 初始化 Logger
-	bootstrap.SetupLogger()
+		// rootCmd 的所有子命令都会执行以下代码
+		PersistentPreRun: func(command *cobra.Command, args []string) {
 
-	// 设置 gin的运行模式，支持debug , release ,test
-	// release 会屏蔽调试信息，官方建议生产环境中使用
-	// 非release 模式gin 终端打印太多信息，干扰到我们程序中的Log
-	// 故此设置为 Release，有特殊情况手动改为 debug 即可
-	gin.SetMode(gin.ReleaseMode)
+			// 配置初始化，以来命令行 --env 参数
+			config.InitConfig(cmd.Env)
 
-	// new 一个 Gin Engine实例
-	r := gin.New()
-	// 初始化DB
-	bootstrap.SetupDB()
+			// 初始化 Logger
+			bootstrap.SetupLogger()
 
-	// 初始化Redis
-	bootstrap.SetupRedis()
+			// 初始化数据库
+			bootstrap.SetupDB()
 
-	// 注册一个路由
-	bootstrap.SetupRouter(r)
+			// 初始化 Redis
+			bootstrap.SetupRedis()
 
-	// 运行服务，默认 8080端口
-	err := r.Run(":" + config.Get("app.port"))
+			// 初始化缓存
+		},
+	}
 
-	if err != nil {
-		fmt.Println(err.Error())
+	// 注册子命令
+	rootCmd.AddCommand(cmd.CmdServe)
+
+	// 配置默认运用 web 服务
+	cmd.RegisterDefaultCmd(rootCmd, cmd.CmdServe)
+
+	// 执行命令
+	if err := rootCmd.Execute(); err != nil {
+		console.Exit(fmt.Sprintf("Fail to run app with %v:%s", os.Args, err.Error()))
 	}
 }

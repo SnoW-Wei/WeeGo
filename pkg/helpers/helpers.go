@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 16:58:57
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-28 19:22:16
+ * @LastEditTime: 2022-03-17 19:29:37
  */
 package helpers
 
@@ -63,4 +63,12 @@ func RandomNumber(length int) string {
 		b[i] = table[int(b[i])%len(table)]
 	}
 	return string(b)
+}
+
+// FirstElement 安全地获取 arg[0]，避免 panic: runtime error : index out of range
+func FirstElement(args []string) string {
+	if len(args) > 0 {
+		return args[0]
+	}
+	return ""
 }
