@@ -1,0 +1,39 @@
+/*
+ * @Descripttion: talk is cheep , show me the code !
+ * @version: V1.0
+ * @Author: snow.wei
+ * @Date: 2022-03-17 20:46:36
+ * @LastEditors: snow.wei
+ * @LastEditTime: 2022-03-17 20:55:15
+ */
+package str
+
+import (
+	"github.com/gertd/go-pluralize"
+	"github.com/iancoleman/strcase"
+)
+
+// Plural 转为复数 user -> users
+func Plural(word string) string {
+	return pluralize.NewClient().Plural(word)
+}
+
+// Singular 转为单数 users -> user
+func Singular(word string) string {
+	return pluralize.NewClient().Singular(word)
+}
+
+// Snake 转为 snake_case , 如 TopicComment -> topic_comment
+func Snake(s string) string {
+	return strcase.ToSnake(s)
+}
+
+// Camel 转为 CamelCase ,如 topic_comment -> TopicComment
+func Camel(s string) string {
+	return strcase.ToCamel(s)
+}
+
+// LowerCamel 转为 lowerCamelCase, 如 TopicComment -> topicComment
+func LowerCamel(s string) string {
+	return strcase.ToLowerCamel(s)
+}
