@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-14 15:29:37
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-14 15:54:42
+ * @LastEditTime: 2022-03-17 12:10:20
  */
 package limiter
 
@@ -29,7 +29,7 @@ func GetKeyRouteWithIP(c *gin.Context) string {
 	return routeToKeyString(c.FullPath()) + c.ClientIP()
 }
 
-func checkRate(c *gin.Context, key string, formatted string) (limiterlib.Context, error) {
+func CheckRate(c *gin.Context, key string, formatted string) (limiterlib.Context, error) {
 
 	// 实现化以来的 limiter 包的limiter.Rate 对象
 	var context limiterlib.Context

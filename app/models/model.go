@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 13:51:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-12 03:04:19
+ * @LastEditTime: 2022-03-17 16:53:05
  */
 package models
 
@@ -19,9 +19,9 @@ type BaseModel struct {
 }
 
 type CommonTimeStampsField struct {
-	CreatedAt localtime.LocalTime `gorm:"comment:'创建时间';type:timestamp;" json:"created_at,omitempty"`
-	UpdatedAt localtime.LocalTime `gorm:"comment:'修改时间';type:timestamp;" json:"updated_at,omitempty"`
-	//DeletedAt *time.Time `gorm:"column:deleted_at;type:timestamp;" json:"deleted_at,omitempty"`
+	CreatedAt localtime.LocalTime `gorm:"comment:'创建时间';column:created_at;" json:"created_at,omitempty"`
+	UpdatedAt localtime.LocalTime `gorm:"comment:'修改时间';column:updated_at;" json:"updated_at,omitempty"`
+	//DeletedAt localtime.LocalTime `gorm:"column:deleted_at;comment:'删除时间" json:"deleted_at,omitempty" sql:"index"`
 }
 
 func (a BaseModel) GetStringID() string {
