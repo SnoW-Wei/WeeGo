@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 16:58:57
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 19:29:37
+ * @LastEditTime: 2022-03-17 20:07:36
  */
 package helpers
 
@@ -12,6 +12,7 @@ import (
 	"crypto/rand"
 	"fmt"
 	"io"
+	mathrand "math/rand"
 	"reflect"
 	"time"
 )
@@ -71,4 +72,15 @@ func FirstElement(args []string) string {
 		return args[0]
 	}
 	return ""
+}
+
+// RandomString 生成长度为 length 的随机字符串
+func RandonString(length int) string {
+	mathrand.Seed(time.Now().UnixNano())
+	letters := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = letters[mathrand.Intn(len(letters))]
+	}
+	return string(b)
 }

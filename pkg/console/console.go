@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 17:22:05
+ * @LastEditTime: 2022-03-17 20:03:30
  */
 package console
 
@@ -25,8 +25,8 @@ func Error(msg string) {
 	colorOut(msg, "red")
 }
 
-// Waring 打印一条提示消息，黄色输出
-func Waring(msg string) {
+// Warning 打印一条提示消息，黄色输出
+func Warning(msg string) {
 	colorOut(msg, "yellow")
 }
 

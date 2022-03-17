@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 19:28:05
+ * @LastEditTime: 2022-03-17 20:15:41
  */
 package main
 
@@ -59,11 +59,15 @@ func main() {
 	}
 
 	// 注册子命令
-	rootCmd.AddCommand(cmd.CmdServe)
+	rootCmd.AddCommand(
+		cmd.CmdServe,
+		cmd.CmdKey,
+	)
 
 	// 配置默认运用 web 服务
 	cmd.RegisterDefaultCmd(rootCmd, cmd.CmdServe)
-
+	// 注册全局参数，--env
+	cmd.RegisterGlobalFlags(rootCmd)
 	// 执行命令
 	if err := rootCmd.Execute(); err != nil {
 		console.Exit(fmt.Sprintf("Fail to run app with %v:%s", os.Args, err.Error()))
