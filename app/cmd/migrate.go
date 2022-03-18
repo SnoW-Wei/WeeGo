@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 16:13:35
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 17:01:27
+ * @LastEditTime: 2022-03-18 20:31:53
  */
 package cmd
 
@@ -30,6 +30,7 @@ var CmdMigrateUp = &cobra.Command{
 func init() {
 	CmdMigrate.AddCommand(
 		CmdMigrateUp,
+		CmdMigrateRollback,
 	)
 }
 
@@ -43,4 +44,16 @@ func migrator() *migrate.Migrator {
 
 func runUp(cmd *cobra.Command, args []string) {
 	migrator().Up()
+}
+
+var CmdMigrateRollback = &cobra.Command{
+	Use: "down",
+	// 设置别名 migrate down == migrate rollback
+	Aliases: []string{"rollback"},
+	Short:   "Reverse the up command",
+	Run:     runDown,
+}
+
+func runDown(cmd *cobra.Command, args []string) {
+	migrator().Rollback()
 }
