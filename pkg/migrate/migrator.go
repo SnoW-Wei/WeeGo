@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 14:10:40
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 20:49:39
+ * @LastEditTime: 2022-03-18 21:03:44
  */
 package migrate
 
@@ -203,5 +203,22 @@ func (migrator *Migrator) Refresh() {
 	migrator.Reset()
 
 	// 再次执行所有迁移
+	migrator.Up()
+}
+
+// Fresh Drop 所有的表并重新运行所有迁移
+func (migrator *Migrator) Fresh() {
+
+	// 获取数据库名称，用以提示
+	dbname := database.CurrentDatabase()
+
+	// 删除所有的表
+	err := database.DeleteAllTables()
+	console.ExitIf(err)
+	console.Success("clearup database " + dbname)
+	// 重新创建migrates 表
+	migrator.createMigrationsTable()
+	console.Success("[migrations] table created.")
+	// 重新调用up命令
 	migrator.Up()
 }

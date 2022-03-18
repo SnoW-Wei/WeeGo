@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 16:13:35
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 20:57:27
+ * @LastEditTime: 2022-03-18 21:19:19
  */
 package cmd
 
@@ -33,6 +33,7 @@ func init() {
 		CmdMigrateRollback,
 		CmdMigrateRefresh,
 		CmdMigrateReset,
+		CmdMigrateFresh,
 	)
 }
 
@@ -78,4 +79,14 @@ var CmdMigrateRefresh = &cobra.Command{
 
 func runRefresh(cmd *cobra.Command, args []string) {
 	migrator().Refresh()
+}
+
+var CmdMigrateFresh = &cobra.Command{
+	Use:   "fresh",
+	Short: "Drop all tables and re-run all migrations",
+	Run:   runFresh,
+}
+
+func runFresh(cmd *cobra.Command, args []string) {
+	migrator().Fresh()
 }
