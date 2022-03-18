@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-17 20:56:41
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 16:57:46
+ * @LastEditTime: 2022-03-18 17:32:49
  */
 package make
 
@@ -78,6 +78,7 @@ func init() {
 		CmdMakeModel,
 		CmdMakeAPIController,
 		CmdMakeRequest,
+		CmdMakeMigration,
 	)
 }
 

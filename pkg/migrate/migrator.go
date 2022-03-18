@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 14:10:40
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 16:06:08
+ * @LastEditTime: 2022-03-18 17:31:17
  */
 package migrate
 
@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"weego/pkg/console"
 	"weego/pkg/database"
+	"weego/pkg/file"
 
 	"gorm.io/gorm"
 )
