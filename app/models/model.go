@@ -4,12 +4,12 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 13:51:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 16:53:05
+ * @LastEditTime: 2022-03-18 23:37:28
  */
 package models
 
 import (
-	"weego/pkg/localtime"
+	"time"
 
 	"github.com/spf13/cast"
 )
@@ -19,8 +19,8 @@ type BaseModel struct {
 }
 
 type CommonTimeStampsField struct {
-	CreatedAt localtime.LocalTime `gorm:"comment:'创建时间';column:created_at;" json:"created_at,omitempty"`
-	UpdatedAt localtime.LocalTime `gorm:"comment:'修改时间';column:updated_at;" json:"updated_at,omitempty"`
+	CreatedAt time.Time `gorm:"comment:'创建时间';column:created_at;" json:"created_at,omitempty"`
+	UpdatedAt time.Time `gorm:"comment:'修改时间';column:updated_at;" json:"updated_at,omitempty"`
 	//DeletedAt localtime.LocalTime `gorm:"column:deleted_at;comment:'删除时间" json:"deleted_at,omitempty" sql:"index"`
 }
 

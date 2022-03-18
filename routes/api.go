@@ -4,11 +4,12 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 16:37:13
+ * @LastEditTime: 2022-03-18 22:18:59
  */
 package routes
 
 import (
+	controllers "weego/app/http/controllers/api/v1"
 	"weego/app/http/controllers/api/v1/auth"
 	"weego/app/http/middlewares"
 
@@ -58,5 +59,9 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/password-reset/using-email", middlewares.GuestJWT(), pwc.ResetByEmail)
 
 		}
+		uc := new(controllers.UsersController)
+
+		// 获取当前用户
+		v1.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
 	}
 }
