@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-17 20:56:41
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 22:34:53
+ * @LastEditTime: 2022-03-18 09:00:20
  */
 package make
 
@@ -75,6 +75,7 @@ func init() {
 	// 注册 make 的子命令
 	CmdMake.AddCommand(
 		CmdMakeCMD,
+		CmdMakeModel,
 	)
 }
 
