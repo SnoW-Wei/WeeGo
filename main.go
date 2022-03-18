@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 22:13:53
+ * @LastEditTime: 2022-03-18 16:57:30
  */
 package main
 
@@ -65,6 +65,7 @@ func main() {
 		cmd.CmdKey,
 		cmd.CmdPlay,
 		make.CmdMake,
+		cmd.CmdMigrate,
 	)
 
 	// 配置默认运用 web 服务
