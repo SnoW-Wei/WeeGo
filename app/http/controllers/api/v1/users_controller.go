@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 22:00:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 16:25:59
+ * @LastEditTime: 2022-03-19 16:57:21
  */
 package v1
 
@@ -26,7 +26,11 @@ func (ctrl *UsersController) CurrentUser(c *gin.Context) {
 	response.Data(c, userModel)
 }
 
+// Index 所有用户
 func (ctrl *UsersController) Index(c *gin.Context) {
-	data := user.All()
-	response.Data(c, data)
+	data, pager := user.Paginate(c, 10)
+	response.JSON(c, gin.H{
+		"data":  data,
+		"pager": pager,
+	})
 }

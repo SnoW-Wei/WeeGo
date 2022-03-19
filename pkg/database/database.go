@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 20:46:28
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 21:17:32
+ * @LastEditTime: 2022-03-19 16:52:47
  */
 package database
 
@@ -109,4 +109,10 @@ func deleteMySQLTables() error {
 	//  开启 Mysql 外键检测
 	DB.Exec("SET foreign_key_checks = 1;")
 	return nil
+}
+
+func TableName(obj interface{}) string {
+	stmt := &gorm.Statement{DB: DB}
+	stmt.Parse(obj)
+	return stmt.Schema.Table
 }

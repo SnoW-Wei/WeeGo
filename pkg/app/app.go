@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-23 21:13:07
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-05 11:58:15
+ * @LastEditTime: 2022-03-19 16:55:08
  */
 package app
 
@@ -30,4 +30,14 @@ func IsTest() bool {
 func TimenowInTimezone() time.Time {
 	chinaTimezone, _ := time.LoadLocation(config.GetString("app.timezoen"))
 	return time.Now().In(chinaTimezone)
+}
+
+// URL 传参 PATH 拼接站点的 URL
+func URL(path string) string {
+	return config.Get("app.url") + path
+}
+
+// V1URL 拼接带v1 标示 URL
+func V1URL(path string) string {
+	return URL("/v1/" + path)
 }
