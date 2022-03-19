@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-19 23:12:03
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 23:41:34
+ * @LastEditTime: 2022-03-19 23:51:34
  */
 package v1
 
@@ -86,24 +86,24 @@ func (ctrl *TopicsController) Update(c *gin.Context) {
 	}
 }
 
-// func (ctrl *TopicsController) Delete(c *gin.Context) {
+func (ctrl *TopicsController) Delete(c *gin.Context) {
 
-// 	topicModel := topic.Get(c.Param("id"))
-// 	if topicModel.ID == 0 {
-// 		response.Abort404(c)
-// 		return
-// 	}
+	topicModel := topic.Get(c.Param("id"))
+	if topicModel.ID == 0 {
+		response.Abort404(c)
+		return
+	}
 
-// 	if ok := policies.CanModifyTopic(c, topicModel); !ok {
-// 		response.Abort403(c)
-// 		return
-// 	}
+	if ok := policies.CanModifyTopic(c, topicModel); !ok {
+		response.Abort403(c)
+		return
+	}
 
-// 	rowsAffected := topicModel.Delete()
-// 	if rowsAffected > 0 {
-// 		response.Success(c)
-// 		return
-// 	}
+	rowsAffected := topicModel.Delete()
+	if rowsAffected > 0 {
+		response.Success(c)
+		return
+	}
 
-// 	response.Abort500(c, "删除失败，请稍后尝试~")
-// }
+	response.Abort500(c, "删除失败，请稍后尝试~")
+}
