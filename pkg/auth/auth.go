@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 14:04:18
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 23:29:00
+ * @LastEditTime: 2022-03-19 23:14:33
  */
 package auth
 
@@ -56,4 +56,9 @@ func CurrentUser(c *gin.Context) user.User {
 // CurrentUID 从 gin.context 中获取当前登录用户id
 func CurrentUID(c *gin.Context) string {
 	return c.GetString("current_user_id")
+}
+
+// CurrentUID 从 gin.context 中获取当前登录用户名
+func CurrentUserName(c *gin.Context) string {
+	return c.GetString("current_user_name")
 }
