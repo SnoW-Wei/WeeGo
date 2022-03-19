@@ -8,8 +8,8 @@ import (
 type Category struct {
 	models.BaseModel
 
-	Name         string `json:"name,omitempty"`
-	Descripttion string `json:"descripttion,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Description string `json:"description,omitempty"`
 
 	models.CommonTimeStampsField
 }

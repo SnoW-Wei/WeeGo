@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 16:29:41
+ * @LastEditTime: 2022-03-19 22:29:28
  */
 package routes
 
@@ -68,6 +68,13 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		{
 			usersGroup.GET("", uc.Index)
 		}
+
+		cgc := new(controllers.CategoriesController)
+		cgcGroup := v1.Group("/categories")
+		{
+			cgcGroup.POST("", middlewares.AuthJWT(), cgc.Store)
+			cgcGroup.PUT("/:id", middlewares.AuthJWT(),cgc.Update)
+		}
 	}
-	
+
 }
