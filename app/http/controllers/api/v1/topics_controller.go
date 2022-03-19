@@ -4,12 +4,13 @@
  * @Author: snow.wei
  * @Date: 2022-03-19 23:12:03
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 23:30:13
+ * @LastEditTime: 2022-03-19 23:41:34
  */
 package v1
 
 import (
 	"weego/app/models/topic"
+	"weego/app/policies"
 	"weego/app/requests"
 	"weego/pkg/auth"
 	"weego/pkg/response"
@@ -58,14 +59,19 @@ func (ctrl *TopicsController) Store(c *gin.Context) {
 
 func (ctrl *TopicsController) Update(c *gin.Context) {
 
+	request := requests.TopicRequest{}
+	if ok := requests.Validate(c, &request, requests.TopicSave); !ok {
+		return
+	}
+
 	topicModel := topic.Get(c.Param("id"))
 	if topicModel.ID == 0 {
 		response.Abort404(c)
 		return
 	}
 
-	request := requests.TopicRequest{}
-	if ok := requests.Validate(c, &request, requests.TopicSave); !ok {
+	if ok := policies.CanModifyTopic(c, topicModel); !ok {
+		response.Abort403(c)
 		return
 	}
 

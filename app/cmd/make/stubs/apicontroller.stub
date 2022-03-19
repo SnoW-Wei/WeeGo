@@ -46,6 +46,11 @@ func (ctrl *{{StructNamePlural}}Controller) Store(c *gin.Context) {
 
 func (ctrl *{{StructNamePlural}}Controller) Update(c *gin.Context) {
 
+    request := requests.{{StructName}}Request{}
+    ok := requests.Validate(c, &request, requests.{{StructName}}Save); !ok {
+        return
+    }
+
     {{VariableName}}Model := {{PackageName}}.Get(c.Param("id"))
     if {{VariableName}}Model.ID == 0 {
         response.Abort404(c)
@@ -54,11 +59,6 @@ func (ctrl *{{StructNamePlural}}Controller) Update(c *gin.Context) {
 
     if ok := policies.CanModify{{StructName}}(c, {{VariableName}}Model); !ok {
         response.Abort403(c)
-        return
-    }
-
-    request := requests.{{StructName}}Request{}
-    ok := requests.Validate(c, &request, requests.{{StructName}}Save); !ok {
         return
     }
 
