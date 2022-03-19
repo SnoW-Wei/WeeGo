@@ -4,12 +4,13 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 22:00:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 23:34:09
+ * @LastEditTime: 2022-03-19 16:25:59
  */
 package v1
 
 import (
-    "weego/pkg/auth"
+	"weego/app/models/user"
+	"weego/pkg/auth"
 	"weego/pkg/response"
 
 	"github.com/gin-gonic/gin"
@@ -23,4 +24,9 @@ type UsersController struct {
 func (ctrl *UsersController) CurrentUser(c *gin.Context) {
 	userModel := auth.CurrentUser(c)
 	response.Data(c, userModel)
+}
+
+func (ctrl *UsersController) Index(c *gin.Context) {
+	data := user.All()
+	response.Data(c, data)
 }

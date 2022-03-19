@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 17:37:49
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-14 01:03:01
+ * @LastEditTime: 2022-03-19 16:27:12
  */
 package user
 
@@ -53,5 +53,10 @@ func Get(idstr string) (userModel User) {
 // GetByEmail 通过 Email 来获取用户
 func GetByEmail(email string) (userModel User) {
 	database.DB.Where("email = ?", email).First(&userModel)
+	return
+}
+
+func All() (users []User) {
+	database.DB.Find(&users)
 	return
 }

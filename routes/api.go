@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 22:18:59
+ * @LastEditTime: 2022-03-19 16:29:41
  */
 package routes
 
@@ -63,5 +63,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
 
 		// 获取当前用户
 		v1.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
+
+		usersGroup := v1.Group("/users")
+		{
+			usersGroup.GET("", uc.Index)
+		}
 	}
 }
