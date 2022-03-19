@@ -1,37 +1,37 @@
 package v1
 
 import (
-    "weego/app/models/link"
-    "weego/app/requests"
-    "weego/pkg/response"
+	"weego/app/models/link"
+	"weego/pkg/response"
 
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
 type LinksController struct {
-    BaseAPIController
+	BaseAPIController
 }
 
 func (ctrl *LinksController) Index(c *gin.Context) {
-    request := requests.PaginationRequest{}
-    if ok := requests.Validate(c, &request, requests.Pagination); !ok {
-        return
-    }
+	// request := requests.PaginationRequest{}
+	// if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+	//     return
+	// }
 
-    data, pager := link.Paginate(c, 10)
-    response.JSON(c, gin.H{
-        "data":  data,
-        "pager": pager,
-    })
+	// data, pager := link.Paginate(c, 10)
+	// response.JSON(c, gin.H{
+	//     "data":  data,
+	//     "pager": pager,
+	// })
+	response.Data(c, link.AllCached())
 }
 
 func (ctrl *LinksController) Show(c *gin.Context) {
-    linkModel := link.Get(c.Param("id"))
-    if linkModel.ID == 0 {
-        response.Abort404(c)
-        return
-    }
-    response.Data(c, linkModel)
+	linkModel := link.Get(c.Param("id"))
+	if linkModel.ID == 0 {
+		response.Abort404(c)
+		return
+	}
+	response.Data(c, linkModel)
 }
 
 // func (ctrl *LinksController) Store(c *gin.Context) {
