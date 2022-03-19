@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-19 23:12:03
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 23:20:40
+ * @LastEditTime: 2022-03-19 23:30:13
  */
 package v1
 
@@ -56,37 +56,29 @@ func (ctrl *TopicsController) Store(c *gin.Context) {
 	}
 }
 
-// func (ctrl *TopicsController) Update(c *gin.Context) {
+func (ctrl *TopicsController) Update(c *gin.Context) {
 
-// 	topicModel := topic.Get(c.Param("id"))
-// 	if topicModel.ID == 0 {
-// 		response.Abort404(c)
-// 		return
-// 	}
+	topicModel := topic.Get(c.Param("id"))
+	if topicModel.ID == 0 {
+		response.Abort404(c)
+		return
+	}
 
-// 	if ok := policies.CanModifyTopic(c, topicModel); !ok {
-// 		response.Abort403(c)
-// 		return
-// 	}
+	request := requests.TopicRequest{}
+	if ok := requests.Validate(c, &request, requests.TopicSave); !ok {
+		return
+	}
 
-// 	request := requests.TopicRequest{}
-// 	bindOk, errs := requests.Validate(c, &request, requests.TopicSave)
-// 	if !bindOk {
-// 		return
-// 	}
-// 	if len(errs) > 0 {
-// 		response.ValidationError(c, 20101, errs)
-// 		return
-// 	}
-
-// 	topicModel.FieldName = request.FieldName
-// 	rowsAffected := topicModel.Save()
-// 	if rowsAffected > 0 {
-// 		response.Data(c, topicModel)
-// 	} else {
-// 		response.Abort500(c, "更新失败，请稍后尝试~")
-// 	}
-// }
+	topicModel.Title = request.Title
+	topicModel.Body = request.Body
+	topicModel.CategoryID = request.CategoryID
+	rowsAffected := topicModel.Save()
+	if rowsAffected > 0 {
+		response.Data(c, topicModel)
+	} else {
+		response.Abort500(c, "更新失败，请稍后尝试~")
+	}
+}
 
 // func (ctrl *TopicsController) Delete(c *gin.Context) {
 
