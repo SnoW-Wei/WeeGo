@@ -69,4 +69,5 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			usersGroup.GET("", uc.Index)
 		}
 	}
+	
 }
