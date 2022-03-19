@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 00:05:41
+ * @LastEditTime: 2022-03-20 00:22:06
  */
 package routes
 
@@ -87,6 +87,12 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			tpcGroup.POST("", middlewares.AuthJWT(), tpc.Store)
 			tpcGroup.PUT("/:id", middlewares.AuthJWT(), tpc.Update)
 			tpcGroup.DELETE("/:id", middlewares.AuthJWT(), tpc.Delete)
+		}
+
+		lsc := new(controllers.LinksController)
+		linksGroup := v1.Group("/links")
+		{
+			linksGroup.GET("", lsc.Index)
 		}
 	}
 
