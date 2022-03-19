@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-19 21:35:57
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 21:54:19
+ * @LastEditTime: 2022-03-19 22:47:07
  */
 package v1
 
@@ -21,8 +21,16 @@ type CategoriesController struct {
 }
 
 func (ctrl *CategoriesController) Index(c *gin.Context) {
-	categories := category.All()
-	response.Data(c, categories)
+	request := requests.PaginationRequest{}
+	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+		return
+	}
+	data, pager := category.Paginate(c, 10)
+
+	response.Data(c, gin.H{
+		"data":  data,
+		"pager": pager,
+	})
 }
 
 func (ctrl *CategoriesController) Show(c *gin.Context) {
@@ -83,8 +91,6 @@ func (ctrl *CategoriesController) Delete(c *gin.Context) {
 		response.Abort404(c)
 		return
 	}
-
-	
 
 	rowsAffected := categoryModel.Delete()
 	if rowsAffected > 0 {
