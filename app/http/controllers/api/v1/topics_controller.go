@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-19 23:12:03
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 23:51:34
+ * @LastEditTime: 2022-03-19 23:59:08
  */
 package v1
 
@@ -23,8 +23,16 @@ type TopicsController struct {
 }
 
 func (ctrl *TopicsController) Index(c *gin.Context) {
-	topics := topic.All()
-	response.Data(c, topics)
+	request := requests.PaginationRequest{}
+	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+		return
+	}
+
+	data, pager := topic.Paginate(c, 10)
+	response.JSON(c, gin.H{
+		"data":  data,
+		"pager": pager,
+	})
 }
 
 func (ctrl *TopicsController) Show(c *gin.Context) {
