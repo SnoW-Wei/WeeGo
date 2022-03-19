@@ -1,7 +1,7 @@
 package {{PackageName}}
 
 import(
-    "weego/pkg/logger"
+    "weego/app/models"
     "weego/pkg/database"
 )
 
@@ -10,7 +10,7 @@ type {{StructName}} struct {
 
     FIXME()
 
-    model.CommonTimestampsField
+    models.CommonTimeStampsField
 }
 
 func ({{VariableName}} *{{StructName}}) Create() {
