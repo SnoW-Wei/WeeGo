@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-25 17:15:58
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-26 10:55:23
+ * @LastEditTime: 2022-03-20 00:56:54
  */
 package config
 
@@ -19,6 +19,9 @@ func init() {
 			"password": config.Env("REDIS_PASSWORD", ""),
 			// 业务类存储 1 （图片验证码，短信验证码，会话）
 			"database": config.Env("REDIS_MAIN_DB", 1),
+
+			// 缓存cache 包使用0 ，缓存清空理应当不影响业务
+			"database_cache": config.Env("REDIS_CACHE_DB", 0),
 		}
 	})
 }

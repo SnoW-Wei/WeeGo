@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 12:56:09
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 11:54:25
+ * @LastEditTime: 2022-03-20 01:04:03
  */
 package main
 
@@ -56,6 +56,7 @@ func main() {
 			bootstrap.SetupRedis()
 
 			// 初始化缓存
+			bootstrap.SetupCache()
 		},
 	}
 
