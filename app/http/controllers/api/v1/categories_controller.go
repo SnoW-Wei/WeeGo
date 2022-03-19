@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-19 21:35:57
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 22:47:07
+ * @LastEditTime: 2022-03-19 23:44:51
  */
 package v1
 
@@ -63,14 +63,14 @@ func (ctrl *CategoriesController) Store(c *gin.Context) {
 
 func (ctrl *CategoriesController) Update(c *gin.Context) {
 
-	categoryModel := category.Get(c.Param("id"))
-	if categoryModel.ID == 0 {
-		response.Abort404(c)
+	request := requests.CategoryRequest{}
+	if ok := requests.Validate(c, &request, requests.CategorySave); !ok {
 		return
 	}
 
-	request := requests.CategoryRequest{}
-	if ok := requests.Validate(c, &request, requests.CategorySave); !ok {
+	categoryModel := category.Get(c.Param("id"))
+	if categoryModel.ID == 0 {
+		response.Abort404(c)
 		return
 	}
 

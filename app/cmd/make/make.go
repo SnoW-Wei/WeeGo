@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-17 20:56:41
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 12:16:26
+ * @LastEditTime: 2022-03-19 23:49:14
  */
 package make
 
@@ -81,6 +81,7 @@ func init() {
 		CmdMakeMigration,
 		CmdMakeFactory,
 		CmdMakeSeeder,
+		CmdMakePolicy,
 	)
 }
 
