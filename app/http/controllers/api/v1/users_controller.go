@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 22:00:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 14:20:31
+ * @LastEditTime: 2022-03-20 14:23:23
  */
 package v1
 
@@ -77,6 +77,24 @@ func (ctrl *UsersController) UpdateEmail(c *gin.Context) {
 		response.Success(c)
 	} else {
 		// 失败，显示错误提示
+		response.Abort500(c, "更新失败，请稍后尝试~")
+	}
+}
+
+func (ctrl *UsersController) UpdatePhone(c *gin.Context) {
+
+	request := requests.UserUpdatePhoneRequest{}
+	if ok := requests.Validate(c, &request, requests.UserUpdatePhone); !ok {
+		return
+	}
+
+	currentUser := auth.CurrentUser(c)
+	currentUser.Phone = request.Phone
+	rowsAffected := currentUser.Save()
+
+	if rowsAffected > 0 {
+		response.Success(c)
+	} else {
 		response.Abort500(c, "更新失败，请稍后尝试~")
 	}
 }
