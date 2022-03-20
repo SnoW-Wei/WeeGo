@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 15:01:31
+ * @LastEditTime: 2022-03-20 15:22:45
  */
 package routes
 
@@ -12,7 +12,6 @@ import (
 	controllers "weego/app/http/controllers/api/v1"
 	"weego/app/http/controllers/api/v1/auth"
 	"weego/app/http/middlewares"
-	"weego/pkg/config"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,21 +19,17 @@ import (
 // RegisterAPIRouter 注册API 相关路由
 func RegisterAPIRoutes(r *gin.Engine) {
 
-	// V1 路由组，我们所有 v1 版本的路由都将存放在这里
-	var v1 *gin.RouterGroup
-	if len(config.Get("app.api_domain")) == 0 {
-		v1 = r.Group("api/v1")
-	} else {
-		v1 = r.Group("v1")
-	}
+	// admin 路由组，我们所有 v1 版本的路由都将存放在这里
+
+	admin := r.Group("admin/v1")
 
 	// 全局限流中间件：每小时限流，这里是所有API（根据IP）请求加起来
 	// 作为参考 GITHUB API 每小时最多 60个请求（根据IP）
 
-	v1.Use(middlewares.LimitIP("200-H"))
+	admin.Use(middlewares.LimitIP("200-H"))
 
 	{
-		authGroup := v1.Group("/auth")
+		authGroup := admin.Group("/auth")
 		// 限流中间键：每小时限流，作为参考github api 每小时最多 60个请求（根据IP）
 		authGroup.Use(middlewares.LimitIP("1000-H"))
 		{
@@ -68,9 +63,9 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		uc := new(controllers.UsersController)
 
 		// 获取当前用户
-		v1.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
+		admin.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
 
-		usersGroup := v1.Group("/users")
+		usersGroup := admin.Group("/users")
 		{
 			usersGroup.GET("", uc.Index)
 			usersGroup.PUT("", middlewares.AuthJWT(), uc.UpdateProfile)
@@ -81,7 +76,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		}
 
 		cgc := new(controllers.CategoriesController)
-		cgcGroup := v1.Group("/categories")
+		cgcGroup := admin.Group("/categories")
 		{
 			cgcGroup.GET("", cgc.Index)
 			cgcGroup.GET("/:id", cgc.Show)
@@ -91,7 +86,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		}
 
 		tpc := new(controllers.TopicsController)
-		tpcGroup := v1.Group("/topics")
+		tpcGroup := admin.Group("/topics")
 		{
 			tpcGroup.GET("", tpc.Index)
 			tpcGroup.GET("/:id", tpc.Show)
@@ -101,7 +96,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		}
 
 		lsc := new(controllers.LinksController)
-		linksGroup := v1.Group("/links")
+		linksGroup := admin.Group("/links")
 		{
 			linksGroup.GET("", lsc.Index)
 		}
