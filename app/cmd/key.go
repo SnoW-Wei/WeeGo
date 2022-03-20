@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-17 19:58:32
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 20:01:36
+ * @LastEditTime: 2022-03-21 00:35:55
  */
 package cmd
 
@@ -25,7 +25,7 @@ var CmdKey = &cobra.Command{
 func runKeyGenerate(cmd *cobra.Command, args []string) {
 	console.Success("---")
 	console.Success("App Key:")
-	console.Success(helpers.RandomNumber(32))
+	console.Success(helpers.RandomString(32))
 	console.Success("---")
 	console.Warning("please go to .env file to change the APP_KEY option")
 }
