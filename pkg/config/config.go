@@ -11,7 +11,7 @@ import (
 //viper 库实例
 var viper *viperlib.Viper
 
-// configFunc 动态加载配置信息
+// ConfigFunc 动态加载配置信息
 type ConfigFunc func() map[string]interface{}
 
 // ConfigFuncs 先加载到此数组，loadConfig 再动态生成配置信息
@@ -38,6 +38,7 @@ func init() {
 	ConfigFuncs = make(map[string]ConfigFunc)
 }
 
+// 初始化
 func InitConfig(env string) {
 
 	// 1. 加载环境变量

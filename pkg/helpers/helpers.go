@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 16:58:57
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-17 20:07:36
+ * @LastEditTime: 2022-03-20 12:07:01
  */
 package helpers
 
@@ -40,6 +40,8 @@ func Empty(val interface{}) bool {
 		return v.Float() == 0
 	case reflect.Interface, reflect.Ptr:
 		return v.IsNil()
+	default:
+		return false
 	}
 	return reflect.DeepEqual(val, reflect.Zero(v.Type()).Interface())
 }

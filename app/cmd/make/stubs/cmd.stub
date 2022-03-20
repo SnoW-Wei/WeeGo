@@ -2,7 +2,7 @@ package cmd
 
 import (
     "errors"
-    "gohub/pkg/console"
+    "weego/pkg/console"
 
     "github.com/spf13/cobra"
 )
