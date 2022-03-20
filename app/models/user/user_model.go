@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 16:52:07
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-12 02:09:45
+ * @LastEditTime: 2022-03-20 12:31:22
  */
 package user
 
@@ -17,7 +17,12 @@ import (
 type User struct {
 	models.BaseModel
 
-	Name     string `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
+
+	City string `json:"city,omitempty"`
+	Introduction string `json:"introduction,omitempty"`
+	Avatar string `json:"avatar,omitempty"`
+
 	Email    string `json:"-"`
 	Phone    string `json:"-"`
 	Password string `json:"-"`

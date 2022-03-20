@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-19 21:25:13
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 21:26:41
+ * @LastEditTime: 2022-03-20 13:05:49
  */
 package migrations
 
@@ -21,8 +21,8 @@ func init() {
 	type Category struct {
 		models.BaseModel
 
-		Name         string `json:"name,omitempty"`
-		Descripttion string `json:"descripttion,omitempty"`
+		Name        string `json:"name,omitempty"`
+		Description string `json:"descripttion,omitempty"`
 
 		models.CommonTimeStampsField
 	}
