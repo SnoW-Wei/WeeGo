@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:32:25
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 15:52:06
+ * @LastEditTime: 2022-03-20 21:05:03
  */
 package bootstrap
 
@@ -37,6 +37,7 @@ func registerGlobalMiddleWare(router *gin.Engine) {
 		middlewares.Logger(),
 		middlewares.Recovery(),
 		middlewares.ForceUA(),
+		middlewares.Cors(),
 	)
 }
 
