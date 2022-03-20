@@ -1,3 +1,11 @@
+/*
+ * @Description: talk is cheep , show me the code !
+ * @version: V1.0
+ * @Author: snow.wei
+ * @Date: 2022-02-21 17:11:46
+ * @LastEditors: snow.wei
+ * @LastEditTime: 2022-03-20 15:04:20
+ */
 package config
 
 import "weego/pkg/config"
@@ -26,6 +34,9 @@ func init() {
 
 			// 设置时区，JWT 里会使用，日志记录里也会使用
 			"timezone": config.Env("TIMEZONE", "Asia/shanghai"),
+
+			// API 域名，未设置的话所有 API URL 加 api 前缀，如 http://domain.com/api/v1/users
+			"api_domain": config.Env("API_DOMAIN"),
 		}
 	})
 }

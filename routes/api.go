@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 14:34:03
+ * @LastEditTime: 2022-03-20 15:01:31
  */
 package routes
 
@@ -12,6 +12,7 @@ import (
 	controllers "weego/app/http/controllers/api/v1"
 	"weego/app/http/controllers/api/v1/auth"
 	"weego/app/http/middlewares"
+	"weego/pkg/config"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,7 +21,12 @@ import (
 func RegisterAPIRoutes(r *gin.Engine) {
 
 	// V1 路由组，我们所有 v1 版本的路由都将存放在这里
-	v1 := r.Group("v1")
+	var v1 *gin.RouterGroup
+	if len(config.Get("app.api_domain")) == 0 {
+		v1 = r.Group("api/v1")
+	} else {
+		v1 = r.Group("v1")
+	}
 
 	// 全局限流中间件：每小时限流，这里是所有API（根据IP）请求加起来
 	// 作为参考 GITHUB API 每小时最多 60个请求（根据IP）
