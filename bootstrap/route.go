@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:32:25
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 14:55:02
+ * @LastEditTime: 2022-03-20 15:52:06
  */
 package bootstrap
 
@@ -25,6 +25,9 @@ func SetupRoute(router *gin.Engine) {
 	// 注册API路由
 	routes.RegisterAPIRoutes(router)
 
+	// 静态资源访问
+	setStaticRouter(router)
+
 	// 配置 404 路由
 	setup404Handler(router)
 }
@@ -35,6 +38,10 @@ func registerGlobalMiddleWare(router *gin.Engine) {
 		middlewares.Recovery(),
 		middlewares.ForceUA(),
 	)
+}
+
+func setStaticRouter(router *gin.Engine) {
+	router.Static("/uploads", "./public/")
 }
 
 func setup404Handler(router *gin.Engine) {
