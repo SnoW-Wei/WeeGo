@@ -8,7 +8,7 @@
 
 ## 开发模块
 ---
-- Restful Api
+- Restful API
 - 数据库ORM
 - Redis
 - 缓存
@@ -27,6 +27,10 @@
 - 图片裁剪
 - 分页
 - 限流（令牌桶）
+- Cors跨域
+- RBAC权限模型 // TODO
+- 多端路由配置 // TODO
+- Wire // TODO Compile-time Dependency Injection for Go
 
 ## 框架基础内容
 ---
@@ -258,3 +262,4 @@
 - [ansi](https://github.com/mgutz/ansi) —— 终端高亮输出
 - [strcase](https://github.com/iancoleman/strcase) —— 字符串大小写操作
 - [pluralize](https://github.com/gertd/go-pluralize) —— 英文字符单数复数处理
+- [casbin](https://github.com/casbin/casbin) —— RBAC模型权限
