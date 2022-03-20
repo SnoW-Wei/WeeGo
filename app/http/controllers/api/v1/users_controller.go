@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 22:00:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 14:25:32
+ * @LastEditTime: 2022-03-20 14:33:18
  */
 package v1
 
@@ -12,6 +12,8 @@ import (
 	"weego/app/models/user"
 	"weego/app/requests"
 	"weego/pkg/auth"
+	"weego/pkg/config"
+	"weego/pkg/file"
 	"weego/pkg/response"
 
 	"github.com/gin-gonic/gin"
@@ -119,4 +121,24 @@ func (ctrl *UsersController) UpdatePassword(c *gin.Context) {
 
 		response.Success(c)
 	}
+}
+
+func (ctrl *UsersController) UpdateAvatar(c *gin.Context) {
+
+	request := requests.UserUpdateAvatarRequest{}
+	if ok := requests.Validate(c, &request, requests.UserUpdateAvatar); !ok {
+		return
+	}
+
+	avatar, err := file.SaveUploadAvatar(c, request.Avatar)
+	if err != nil {
+		response.Abort500(c, "上传头像失败，请稍后尝试~")
+		return
+	}
+
+	currentUser := auth.CurrentUser(c)
+	currentUser.Avatar = config.GetString("app.url") + avatar
+	currentUser.Save()
+
+	response.Data(c, currentUser)
 }

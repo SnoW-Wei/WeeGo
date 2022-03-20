@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 16:58:57
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 12:07:01
+ * @LastEditTime: 2022-03-20 14:32:56
  */
 package helpers
 
@@ -77,7 +77,7 @@ func FirstElement(args []string) string {
 }
 
 // RandomString 生成长度为 length 的随机字符串
-func RandonString(length int) string {
+func RandomString(length int) string {
 	mathrand.Seed(time.Now().UnixNano())
 	letters := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	b := make([]byte, length)

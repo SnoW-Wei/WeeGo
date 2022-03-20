@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-23 12:57:10
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-19 17:51:14
+ * @LastEditTime: 2022-03-20 14:30:56
  */
 package requests
 
@@ -52,4 +52,15 @@ func validate(data interface{}, rules govalidator.MapData, messages govalidator.
 	}
 
 	return govalidator.New(opts).ValidateStruct()
+}
+
+func validateFile(c *gin.Context, data interface{}, rules govalidator.MapData, messages govalidator.MapData) map[string][]string {
+	opts := govalidator.Options{
+		Request:       c.Request,
+		Rules:         rules,
+		Messages:      messages,
+		TagIdentifier: "valid",
+	}
+	// 调用 govalidator 的 Validate 方法来验证文件
+	return govalidator.New(opts).Validate()
 }
