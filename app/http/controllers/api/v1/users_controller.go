@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 22:00:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 14:23:23
+ * @LastEditTime: 2022-03-20 14:25:32
  */
 package v1
 
@@ -96,5 +96,27 @@ func (ctrl *UsersController) UpdatePhone(c *gin.Context) {
 		response.Success(c)
 	} else {
 		response.Abort500(c, "更新失败，请稍后尝试~")
+	}
+}
+
+func (ctrl *UsersController) UpdatePassword(c *gin.Context) {
+
+	request := requests.UserUpdatePasswordRequest{}
+	if ok := requests.Validate(c, &request, requests.UserUpdatePassword); !ok {
+		return
+	}
+
+	currentUser := auth.CurrentUser(c)
+	// 验证原始密码是否正确
+	_, err := auth.Attempt(currentUser.Name, request.Password)
+	if err != nil {
+		// 失败，显示错误提示
+		response.Unauthorized(c, "原密码不正确")
+	} else {
+		// 更新密码为新密码
+		currentUser.Password = request.NewPassword
+		currentUser.Save()
+
+		response.Success(c)
 	}
 }

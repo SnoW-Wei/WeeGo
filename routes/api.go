@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 14:23:38
+ * @LastEditTime: 2022-03-20 14:25:41
  */
 package routes
 
@@ -70,6 +70,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			usersGroup.PUT("", middlewares.AuthJWT(), uc.UpdateProfile)
 			usersGroup.PUT("/email", middlewares.AuthJWT(), uc.UpdateEmail)
 			usersGroup.PUT("/phone", middlewares.AuthJWT(), uc.UpdatePhone)
+			usersGroup.PUT("/password", middlewares.AuthJWT(), uc.UpdatePassword)
 		}
 
 		cgc := new(controllers.CategoriesController)
