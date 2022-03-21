@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-06 21:53:05
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-18 23:30:16
+ * @LastEditTime: 2022-03-21 19:34:21
  */
 package middlewares
 
@@ -18,13 +18,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AuthJWT() gin.HandlerFunc {
+func AuthJWT(guard string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		claims, err := jwt.NewJWT().ParserToken(c)
+		claims, err := jwt.NewJWT(guard).ParserToken(c)
 
 		if err != nil {
 			response.Unauthorized(c, fmt.Sprintf("请查看 %v 相关的接口认证文档", config.GetString("app.name")))
+			return
+		}
+		if ok, _ := jwt.NewJWT(guard).BlackListCache(c, "c"); !ok {
+			response.Unauthorized(c, "令牌无效")
 			return
 		}
 

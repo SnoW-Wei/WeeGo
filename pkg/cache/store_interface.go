@@ -4,13 +4,14 @@
  * @Author: snow.wei
  * @Date: 2022-03-20 00:25:23
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 00:37:03
+ * @LastEditTime: 2022-03-21 20:32:48
  */
 package cache
 
 import "time"
 
 type Store interface {
+	TTL(key string) time.Duration
 	Set(key string, value string, expireTime time.Duration)
 	Get(key string) string
 	Has(key string) bool

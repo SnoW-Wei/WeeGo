@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-22 18:18:22
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-21 16:10:47
+ * @LastEditTime: 2022-03-21 16:12:57
  */
 package auth
 
@@ -73,7 +73,7 @@ func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 	userModel.Create()
 
 	if userModel.ID > 0 {
-		token := jwt.NewJWT("api").IssueToken(userModel.GetStringID(), userModel.Name)
+		token := jwt.NewJWT("admin").IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
 			"token": token,
 			"data":  userModel,
@@ -102,7 +102,7 @@ func (sc *SignupController) SignupUsingEmail(c *gin.Context) {
 	userModel.Create()
 
 	if userModel.ID > 0 {
-		token := jwt.NewJWT("api").IssueToken(userModel.GetStringID(), userModel.Name)
+		token := jwt.NewJWT("admin").IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
 			"token": token,
 			"data":  userModel,

@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 10:09:36
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-06 23:11:17
+ * @LastEditTime: 2022-03-21 21:29:10
  */
 package jwt
 
@@ -13,7 +13,9 @@ import (
 	"strings"
 	"time"
 	"weego/pkg/app"
+	"weego/pkg/cache"
 	"weego/pkg/config"
+	"weego/pkg/helpers"
 	"weego/pkg/logger"
 
 	"github.com/gin-gonic/gin"
@@ -31,6 +33,9 @@ var (
 
 // JWT 定义一个jwt 对象
 type JWT struct {
+	// 看守器 admin api user等
+	Guards string
+
 	// 秘钥，用以加密 jwt ,读取配置信息 app.key
 	SignKey []byte
 
@@ -56,8 +61,9 @@ type JWTCustomClaims struct {
 	jwtpkg.StandardClaims
 }
 
-func NewJWT() *JWT {
+func NewJWT(gurad string) *JWT {
 	return &JWT{
+		Guards:     gurad,
 		SignKey:    []byte(config.GetString("app.key")),
 		MaxRefresh: time.Duration(config.GetInt("jwt.max_refresh_time")) * time.Second,
 	}
@@ -89,7 +95,11 @@ func (jwt *JWT) ParserToken(c *gin.Context) (*JWTCustomClaims, error) {
 
 	// 3. 将 token 中的 claims 信息解析出来和 JWTCustomClaims 数据结构进行校验
 	if claims, ok := token.Claims.(*JWTCustomClaims); ok && token.Valid {
-		return claims, nil
+
+		// 看守器判断
+		if claims.Subject == jwt.Guards {
+			return claims, nil
+		}
 	}
 	return nil, ErrTokenInvalid
 }
@@ -142,6 +152,7 @@ func (jwt *JWT) IssueToken(userID string, userName string) string {
 			IssuedAt:  app.TimenowInTimezone().Unix(), // 首次签名时间（后续刷新token 不会更新）
 			ExpiresAt: expireAtTime,                   // 过期时间
 			Issuer:    config.GetString("app.name"),   // 签名颁发者
+			Subject:   jwt.Guards,                     //看守器
 		},
 	}
 
@@ -197,4 +208,53 @@ func (jwt *JWT) getTokenFromHeader(c *gin.Context) (string, error) {
 	}
 
 	return parts[1], nil
+}
+
+// redis 黑名单实现token 过期 ：用户主动注销、强制登出(禁止登陆)、忘记密码、修改密码、JWT续签、踢出下线 等  userID:guard token
+
+func (jwt *JWT) BlackListCache(c *gin.Context, args string) (bool, error) {
+	// 1. 从header 里获取token
+	tokenString, parseErr := jwt.getTokenFromHeader(c)
+	if parseErr != nil {
+		return false, ErrTokenInvalid
+	}
+
+	// 2. 调用 jwt 库解析用户传参的Token
+	token, err := jwt.parseTokenString(tokenString)
+
+	// 3. 解析出错，未报错证明是合法的 token（甚至未到过期时间）
+	if err != nil {
+		validationErr, ok := err.(*jwtpkg.ValidationError)
+
+		if !ok || validationErr.Errors != jwtpkg.ValidationErrorExpired {
+			return false, ErrTokenInvalid
+		}
+	}
+
+	// 4. 解析 JWTCustomClaims 的数据
+	claims := token.Claims.(*JWTCustomClaims)
+
+	cacheKey := "token:" + claims.UserID + ":" + claims.Subject
+
+	// 设置过期时间
+	var expireTime int64
+	if config.GetBool("app.debug") {
+		expireTime = config.GetInt64("jwt.debug_expire_time")
+	} else {
+		expireTime = config.GetInt64("jwt.expire_time")
+	}
+	expire := time.Duration(expireTime) * time.Minute
+
+	// check 数据
+	if !helpers.Empty(cache.Get(cacheKey)) && args == "c" {
+		if claims.StandardClaims.ExpiresAt < app.TimenowInTimezone().Add(cache.TTL(cacheKey)).Unix() {
+			return false, ErrTokenInvalid
+		}
+	}
+	if args == "s" {
+		// set 缓存
+		cache.Set(cacheKey, claims.Subject, expire)
+	}
+
+	return true, nil
 }

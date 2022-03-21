@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-05 14:22:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-21 16:10:41
+ * @LastEditTime: 2022-03-21 16:12:39
  */
 package auth
 
@@ -39,7 +39,7 @@ func (lc *LoginController) LoginByPhone(c *gin.Context) {
 		response.Error(c, err, "账号不存在或密码错误")
 	} else {
 		// 登录成功
-		token := jwt.NewJWT("api").IssueToken(user.GetStringID(), user.Name)
+		token := jwt.NewJWT("admin").IssueToken(user.GetStringID(), user.Name)
 
 		response.JSON(c, gin.H{
 			"token": token,
@@ -62,7 +62,7 @@ func (lc *LoginController) LoginByPassword(c *gin.Context) {
 		// 失败，显示错误提示
 		response.Unauthorized(c, "登录失败")
 	} else {
-		token := jwt.NewJWT("api").IssueToken(user.GetStringID(), user.Name)
+		token := jwt.NewJWT("admin").IssueToken(user.GetStringID(), user.Name)
 		response.JSON(c, gin.H{
 			"token": token,
 		})
@@ -71,7 +71,7 @@ func (lc *LoginController) LoginByPassword(c *gin.Context) {
 }
 
 func (lc *LoginController) RefreshToken(c *gin.Context) {
-	token, err := jwt.NewJWT("api").RefreshToken(c)
+	token, err := jwt.NewJWT("admin").RefreshToken(c)
 	if err != nil {
 		response.Error(c, err, "刷新token失败")
 	} else {

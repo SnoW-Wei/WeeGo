@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-25 16:21:37
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-02-26 11:07:36
+ * @LastEditTime: 2022-03-21 20:25:09
  */
 package redis
 
@@ -63,6 +63,17 @@ func NewClient(address string, username string, password string, db int) *RedisC
 func (rds RedisClient) Ping() error {
 	_, err := rds.Client.Ping(rds.Context).Result()
 	return err
+}
+
+func (rds RedisClient) TTL(key string) time.Duration {
+	result, err := rds.Client.TTL(rds.Context, key).Result()
+
+	if err != nil {
+		if err != redis.Nil {
+			logger.ErrorString("Redis", "ttl", err.Error())
+		}
+	}
+	return result
 }
 
 // Set 存储 key 对应的 value , 且设置 expiration 过期时间

@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-20 00:38:14
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 00:54:01
+ * @LastEditTime: 2022-03-21 20:25:05
  */
 package cache
 
@@ -31,6 +31,10 @@ func (s *RedisStore) Set(key string, value string, expireTime time.Duration) {
 
 func (s *RedisStore) Get(key string) string {
 	return s.RedisClient.Get(s.KeyPrefix + key)
+}
+
+func (s *RedisStore) TTL(key string) time.Duration {
+	return s.RedisClient.TTL(s.KeyPrefix + key)
 }
 
 func (s *RedisStore) Has(key string) bool {

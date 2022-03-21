@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-20 00:54:33
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 00:54:33
+ * @LastEditTime: 2022-03-21 21:28:22
  */
 // Package cache 缓存工具类，可以缓存各种类型包括 struct 对象
 package cache
@@ -33,6 +33,11 @@ func InitWithCacheStore(store Store) {
 	})
 }
 
+func TTL(key string) time.Duration {
+	ttlValue := Cache.Store.TTL(key)
+	return ttlValue
+}
+
 func Set(key string, obj interface{}, expireTime time.Duration) {
 	b, err := json.Marshal(&obj)
 	logger.LogIf(err)
@@ -41,6 +46,9 @@ func Set(key string, obj interface{}, expireTime time.Duration) {
 
 func Get(key string) interface{} {
 	stringValue := Cache.Store.Get(key)
+	if len(stringValue) == 0 {
+		return nil
+	}
 	var wanted interface{}
 	err := json.Unmarshal([]byte(stringValue), &wanted)
 	logger.LogIf(err)

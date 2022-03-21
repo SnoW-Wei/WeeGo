@@ -1,28 +1,28 @@
 /*
- * @Descripttion: talk is cheep , show me the code !
+ * @Description: talk is cheep , show me the code !
  * @version: V1.0
  * @Author: snow.wei
- * @Date: 2022-02-21 15:48:02
+ * @Date: 2022-03-21 15:09:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-21 16:09:53
+ * @LastEditTime: 2022-03-21 18:48:46
  */
 package routes
 
 import (
-	controllers "weego/app/http/controllers/api/v1"
-	"weego/app/http/controllers/api/v1/auth"
+	controllers "weego/app/http/controllers/admin/v1"
+	"weego/app/http/controllers/admin/v1/auth"
 	"weego/app/http/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
 // RegisterAPIRouter 注册API 相关路由
-func RegisterAPIRoutes(r *gin.Engine) {
+func RegisterAdminRoutes(r *gin.Engine) {
 
 	// api 路由组，我们所有 v1 版本的路由都将存放在这里
 
-	api := r.Group("api/v1")
-	guard := "api"
+	api := r.Group("admin/v1")
+	guard := "admin"
 	// 全局限流中间件：每小时限流，这里是所有API（根据IP）请求加起来
 	// 作为参考 GITHUB API 每小时最多 60个请求（根据IP）
 
@@ -56,8 +56,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
 
 			//重置密码
 			pwc := new(auth.PasswordController)
-			authGroup.POST("/password-reset/using-phone", middlewares.GuestJWT(guard), pwc.ResetByphone)
-			authGroup.POST("/password-reset/using-email", middlewares.GuestJWT(guard), pwc.ResetByEmail)
+			authGroup.POST("/password-reset/using-phone", middlewares.AuthJWT(guard), pwc.ResetByphone)
+			authGroup.POST("/password-reset/using-email", middlewares.AuthJWT(guard), pwc.ResetByEmail)
 
 		}
 		uc := new(controllers.UsersController)

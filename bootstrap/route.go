@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:32:25
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 21:05:03
+ * @LastEditTime: 2022-03-21 15:10:55
  */
 package bootstrap
 
@@ -24,6 +24,8 @@ func SetupRoute(router *gin.Engine) {
 
 	// 注册API路由
 	routes.RegisterAPIRoutes(router)
+
+	routes.RegisterAdminRoutes(router)
 
 	// 静态资源访问
 	setStaticRouter(router)
