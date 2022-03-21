@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-02-21 15:48:02
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 15:22:45
+ * @LastEditTime: 2022-03-21 11:42:34
  */
 package routes
 
@@ -19,17 +19,17 @@ import (
 // RegisterAPIRouter 注册API 相关路由
 func RegisterAPIRoutes(r *gin.Engine) {
 
-	// admin 路由组，我们所有 v1 版本的路由都将存放在这里
+	// api 路由组，我们所有 v1 版本的路由都将存放在这里
 
-	admin := r.Group("admin/v1")
+	api := r.Group("api/v1")
 
 	// 全局限流中间件：每小时限流，这里是所有API（根据IP）请求加起来
 	// 作为参考 GITHUB API 每小时最多 60个请求（根据IP）
 
-	admin.Use(middlewares.LimitIP("200-H"))
+	api.Use(middlewares.LimitIP("200-H"))
 
 	{
-		authGroup := admin.Group("/auth")
+		authGroup := api.Group("/auth")
 		// 限流中间键：每小时限流，作为参考github api 每小时最多 60个请求（根据IP）
 		authGroup.Use(middlewares.LimitIP("1000-H"))
 		{
@@ -63,9 +63,9 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		uc := new(controllers.UsersController)
 
 		// 获取当前用户
-		admin.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
+		api.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
 
-		usersGroup := admin.Group("/users")
+		usersGroup := api.Group("/users")
 		{
 			usersGroup.GET("", uc.Index)
 			usersGroup.PUT("", middlewares.AuthJWT(), uc.UpdateProfile)
@@ -76,7 +76,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		}
 
 		cgc := new(controllers.CategoriesController)
-		cgcGroup := admin.Group("/categories")
+		cgcGroup := api.Group("/categories")
 		{
 			cgcGroup.GET("", cgc.Index)
 			cgcGroup.GET("/:id", cgc.Show)
@@ -86,7 +86,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		}
 
 		tpc := new(controllers.TopicsController)
-		tpcGroup := admin.Group("/topics")
+		tpcGroup := api.Group("/topics")
 		{
 			tpcGroup.GET("", tpc.Index)
 			tpcGroup.GET("/:id", tpc.Show)
@@ -96,7 +96,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		}
 
 		lsc := new(controllers.LinksController)
-		linksGroup := admin.Group("/links")
+		linksGroup := api.Group("/links")
 		{
 			linksGroup.GET("", lsc.Index)
 		}
