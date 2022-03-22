@@ -29,7 +29,7 @@
 - 限流（令牌桶）
 - Cors跨域
 - RBAC权限模型 // TODO
-- 多端路由配置 // TODO
+- 多端路由配置
 - Wire // TODO Compile-time Dependency Injection for Go
 - 操作历史 // TODO
 

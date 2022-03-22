@@ -4,7 +4,7 @@
  * @Author: snow.wei
  * @Date: 2022-03-18 22:00:55
  * @LastEditors: snow.wei
- * @LastEditTime: 2022-03-20 14:33:18
+ * @LastEditTime: 2022-03-21 21:37:31
  */
 package v1
 
@@ -14,6 +14,7 @@ import (
 	"weego/pkg/auth"
 	"weego/pkg/config"
 	"weego/pkg/file"
+	"weego/pkg/jwt"
 	"weego/pkg/response"
 
 	"github.com/gin-gonic/gin"
@@ -118,7 +119,7 @@ func (ctrl *UsersController) UpdatePassword(c *gin.Context) {
 		// 更新密码为新密码
 		currentUser.Password = request.NewPassword
 		currentUser.Save()
-
+		jwt.NewJWT("admin").BlackListCache(c, "s")
 		response.Success(c)
 	}
 }
